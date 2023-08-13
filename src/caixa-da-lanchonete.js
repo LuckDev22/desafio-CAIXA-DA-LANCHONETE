@@ -15,7 +15,7 @@ class CaixaDaLanchonete {
 
         const calcularValorItem = (codigo, quantidade) => {
             let valor = cardapio[codigo];
-        
+
             if (codigo === "cafe" && quantidade >= 1) {
                 valor += (quantidade - 1) * cardapio.chantily;
             }
@@ -26,16 +26,27 @@ class CaixaDaLanchonete {
         };
 
         const validarPedido = (pedido) => {
-            console.log(pedido)
+            console.log(pedido);
             for (const item of pedido) {
                 const [codigo, quantidade] = item.split(",");
                 if (!cardapio[codigo]) {
                     return "Item inválido!";
                 }
-                if ((codigo !== "chantily" && codigo !== "queijo") && (quantidade <= 0 || isNaN(quantidade))) {
+                if (
+                    codigo !== "chantily" &&
+                    codigo !== "queijo" &&
+                    (quantidade <= 0 || isNaN(quantidade))
+                ) {
                     return "Quantidade inválida!";
                 }
-                if ((codigo === "chantily" || codigo === "queijo") && !pedido.includes(`${codigo === "chantily" ? "cafe" : "sanduiche"},${quantidade}`)) {
+                if (
+                    (codigo === "chantily" || codigo === "queijo") &&
+                    !pedido.includes(
+                        `${
+                            codigo === "chantily" ? "cafe" : "sanduiche"
+                        },${quantidade}`
+                    )
+                ) {
                     return "Item extra não pode ser pedido sem o principal";
                 }
             }
@@ -47,9 +58,9 @@ class CaixaDaLanchonete {
                 return "Forma de pagamento inválida!";
             }
             if (metodoDePagamento === "dinheiro") {
-                total *= 0.95; // 5% de desconto
+                total *= 0.95;
             } else if (metodoDePagamento === "credito") {
-                total *= 1.03; // 3% de acréscimo
+                total *= 1.03;
             }
             return `R$ ${total.toFixed(2).replace(".", ",")}`;
         };
